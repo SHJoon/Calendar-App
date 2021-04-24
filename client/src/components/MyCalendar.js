@@ -8,6 +8,8 @@ import CreateEvent from './CreateEvent';
 const localizer = momentLocalizer(moment);
 
 const MyCalendar = () => {
+  const [open, setOpen] = useState(false);
+
   return (
     <div>
       <Calendar
@@ -21,6 +23,7 @@ const MyCalendar = () => {
         endAccessor="end"
         style={{height:"100vh"}}
       />
+      <CreateEvent open={open} setOpen={setOpen} />
     </div>
   );
 };
