@@ -5,7 +5,7 @@ const CreateEvent = (props) => {
 
     const handleClose = (e) => {
         e.preventDefault();
-        setOpen(false);
+        props.setOpen(false);
     }
 
 
@@ -16,7 +16,9 @@ const CreateEvent = (props) => {
         onClose={e => handleClose(e)}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
-      ></Modal>
+      >
+        <div></div>
+      </Modal>
     </div>
   );
 };

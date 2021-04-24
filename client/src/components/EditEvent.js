@@ -1,6 +1,12 @@
 import React from "react";
+import Modal from '@material-ui/core/Modal';
 
 const EditEvent = (props) => {
+  const handleClose = (e) => {
+    e.preventDefault();
+    props.setOpen(false);
+  }
+
   return (
     <div>
       <Modal
@@ -8,7 +14,9 @@ const EditEvent = (props) => {
         onClose={(e) => handleClose(e)}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
-      ></Modal>
+      >
+        <div></div>
+      </Modal>
     </div>
   );
 };

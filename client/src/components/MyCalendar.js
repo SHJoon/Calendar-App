@@ -26,6 +26,7 @@ const MyCalendar = () => {
         startAccessor="start"
         endAccessor="end"
         style={{ height: "100vh" }}
+        onSelectEvent={console.log("hello")}
       />
       <CreateEvent open={createOpen} setOpen={setCreateOpen} />
       <EditEvent open={editOpen} setOpen={setEditOpen} />
