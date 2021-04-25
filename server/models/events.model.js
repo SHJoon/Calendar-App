@@ -12,6 +12,12 @@ const EventSchema = new mongoose.Schema(
     },
     end: {
       type: Date,
+      validate: {
+        validator: function (val) {
+          return this.start <= val;
+        },
+        message: "Start date cannot be past the end date.",
+      },
       required: [true, "{PATH} is a required parameter."],
     },
   },
