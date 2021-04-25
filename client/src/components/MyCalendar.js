@@ -14,15 +14,16 @@ const MyCalendar = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   const handleClickEvent = (event, e) => {
-    // e.preventDefault();
+    e.preventDefault();
 
     console.log(event);
     setSelectedEvent(event);
     setEditOpen(true);
-  }
+  };
 
   return (
     <div>
+      <button onClick={e => setCreateOpen(true)}>Create new event</button>
       <Calendar
         localizer={localizer}
         events={[
@@ -37,7 +38,6 @@ const MyCalendar = () => {
         style={{ height: "80vh", width: "80vw" }}
         onSelectEvent={(event, e) => handleClickEvent(event, e)}
       />
-      {/* <button>Create new event</button> */}
       <CreateEvent open={createOpen} setOpen={setCreateOpen} />
       <EditEvent open={editOpen} setOpen={setEditOpen} />
     </div>
