@@ -15,6 +15,7 @@ const CreateEvent = (props) => {
       start: startDate,
       end: endDate,
     };
+
     axios
       .post(`http://localhost:8000/api/events/create`, formData)
       .then((res) => {
@@ -42,6 +43,7 @@ const CreateEvent = (props) => {
                 type="text"
                 id="event-title"
                 onChange={(e) => setTitle(e.target.value)}
+                value={title}
               />
               {errors?.title && (
                 <p style={{ color: "red" }}>{errors.title?.message}</p>
@@ -53,6 +55,7 @@ const CreateEvent = (props) => {
                 type="date"
                 id="event-title"
                 onChange={(e) => setStartDate(e.target.value)}
+                value={startDate}
               />
               {errors?.start && (
                 <p style={{ color: "red" }}>{errors.start?.message}</p>
@@ -64,6 +67,7 @@ const CreateEvent = (props) => {
                 type="date"
                 id="event-end"
                 onChange={(e) => setEndDate(e.target.value)}
+                value={endDate}
               />
               {errors?.end && (
                 <p style={{ color: "red" }}>{errors.end?.message}</p>

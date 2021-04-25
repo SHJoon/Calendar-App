@@ -1,14 +1,31 @@
 import React from "react";
 import Modal from "@material-ui/core/Modal";
-import axios from 'axios';
+import axios from "axios";
 
 const EditEvent = (props) => {
   const [title, setTitle] = useState(props.selectedEvent.title);
   const [startDate, setStartDate] = useState(props.selectedEvent.start);
   const [endDate, setEndDate] = useState(props.selectedEvent.end);
+  const [errors, setErrors] = useState(null);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    const formData = {
+      title,
+      start: startDate,
+      end: endDate,
+    };
+
+    axios
+      .put(
+        `http://localhost:8000/api/events/${props.selectedEvent.id}`,
+        formData
+      )
+      .then((res) => {
+        setOpen(false);
+      })
+      .catch((err) => {
+        setErrors(err.response.data.errors);
+      });
   };
 
   return (
@@ -28,7 +45,11 @@ const EditEvent = (props) => {
                 type="text"
                 id="event-title"
                 onChange={(e) => setTitle(e.target.value)}
+                value={title}
               />
+              {errors?.title && (
+                <p style={{ color: "red" }}>{errors.title?.message}</p>
+              )}
             </div>
             <div>
               <label for="event-title">Start: </label>
@@ -36,7 +57,11 @@ const EditEvent = (props) => {
                 type="date"
                 id="event-title"
                 onChange={(e) => setStartDate(e.target.value)}
+                value={startDate}
               />
+              {errors?.start && (
+                <p style={{ color: "red" }}>{errors.start?.message}</p>
+              )}
             </div>
             <div>
               <label for="event-title">End: </label>
@@ -44,7 +69,11 @@ const EditEvent = (props) => {
                 type="date"
                 id="event-title"
                 onChange={(e) => setEndDate(e.target.value)}
+                value={endDate}
               />
+              {errors?.end && (
+                <p style={{ color: "red" }}>{errors.end?.message}</p>
+              )}
             </div>
           </form>
         </div>

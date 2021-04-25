@@ -16,16 +16,16 @@ const MyCalendar = () => {
   const [editOpen, setEditOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/events`)
-      .then((res) => {
-        setAllEvents(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:8000/api/events`)
+  //     .then((res) => {
+  //       setAllEvents(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }, []);
 
   const handleClickEvent = (event, e) => {
     e.preventDefault();
@@ -40,6 +40,7 @@ const MyCalendar = () => {
       <button onClick={(e) => setCreateOpen(true)}>Create new event</button>
       <Calendar
         localizer={localizer}
+        // events={allEvents}
         events={[
           {
             start: moment().toDate(),
