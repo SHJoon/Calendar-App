@@ -17,36 +17,22 @@ const EditEvent = (props) => {
     } else {
       copiedData = { ...props.selectedEvent, end: data };
     }
-
-    props.setSelectedEvent(copiedData);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(props);
-    // console.log(title);
-    // console.log(startDate);
-    // console.log(endDate);
-    // setStartDate(moment(props.selectedEvent.start).format('l'));
 
-    console.log(moment(props.selectedEvent.start).format("l"));
-    // const formData = {
-    //   title,
-    //   start: startDate,
-    //   end: endDate,
-    // };
-
-    // axios
-    //   .put(
-    //     `http://localhost:8000/api/events/${props.selectedEvent.id}`,
-    //     formData
-    //   )
-    //   .then((res) => {
-    //     props.setOpen(false);
-    //   })
-    //   .catch((err) => {
-    //     setErrors(err.response.data.errors);
-    //   });
+    axios
+      .put(
+        `http://localhost:8000/api/events/${props.selectedEvent.id}`,
+        selectedEvent
+      )
+      .then((res) => {
+        props.setOpen(false);
+      })
+      .catch((err) => {
+        setErrors(err.response.data.errors);
+      });
   };
 
   return (
