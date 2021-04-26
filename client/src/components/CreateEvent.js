@@ -19,7 +19,7 @@ const CreateEvent = (props) => {
     axios
       .post(`http://localhost:8000/api/events/create`, formData)
       .then((res) => {
-        setOpen(false);
+        props.setOpen(false);
       })
       .catch((err) => {
         setErrors(err.response.data.errors);
@@ -38,7 +38,7 @@ const CreateEvent = (props) => {
           <h2 id="create-title">Create new event</h2>
           <form onSubmit={(e) => handleSubmit(e)}>
             <div>
-              <label for="event-title">Title: </label>
+              <label htmlFor="event-title">Title: </label>
               <input
                 type="text"
                 id="event-title"
@@ -50,7 +50,7 @@ const CreateEvent = (props) => {
               )}
             </div>
             <div>
-              <label for="event-title">Start: </label>
+              <label htmlFor="event-title">Start: </label>
               <input
                 type="date"
                 id="event-title"
@@ -62,7 +62,7 @@ const CreateEvent = (props) => {
               )}
             </div>
             <div>
-              <label for="event-end">End: </label>
+              <label htmlFor="event-end">End: </label>
               <input
                 type="date"
                 id="event-end"
@@ -73,6 +73,7 @@ const CreateEvent = (props) => {
                 <p style={{ color: "red" }}>{errors.end?.message}</p>
               )}
             </div>
+            <button>Create Event</button>
           </form>
         </div>
       </Modal>

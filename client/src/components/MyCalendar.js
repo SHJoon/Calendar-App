@@ -14,7 +14,7 @@ const MyCalendar = () => {
   const [allEvents, setAllEvents] = useState([]);
   const [createOpen, setCreateOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState({title:"", start:new Date(), end:new Date()});
 
   // useEffect(() => {
   //   axios
@@ -28,8 +28,6 @@ const MyCalendar = () => {
   // }, []);
 
   const handleClickEvent = (event, e) => {
-    e.preventDefault();
-
     console.log(event);
     setSelectedEvent(event);
     setEditOpen(true);
@@ -46,6 +44,10 @@ const MyCalendar = () => {
             start: moment().toDate(),
             end: moment().add(1, "days").toDate(),
             title: "Some title",
+          }, {
+            start: moment().toDate(),
+            end: moment().add(3, "days").toDate(),
+            title: "Some title23",
           },
         ]}
         startAccessor="start"
@@ -58,6 +60,7 @@ const MyCalendar = () => {
         open={editOpen}
         setOpen={setEditOpen}
         selectedEvent={selectedEvent}
+        setSelectedEvent={setSelectedEvent}
       />
     </div>
   );
