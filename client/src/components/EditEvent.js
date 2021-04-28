@@ -24,7 +24,7 @@ const EditEvent = (props) => {
 
     axios
       .put(
-        `http://localhost:8000/api/events/${props.selectedEvent.id}`,
+        `http://localhost:8000/api/events/${props.selectedEvent._id}`,
         selectedEvent
       )
       .then((res) => {
