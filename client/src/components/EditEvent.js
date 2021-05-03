@@ -1,38 +1,52 @@
 import React, { useState } from "react";
+import { makeStyles } from '@material-ui/core/styles';
 import Modal from "@material-ui/core/Modal";
 import moment from "moment";
+import DateTimeRangePicker from "@wojtekmaj/react-datetimerange-picker";
 import axios from "axios";
 
+import "@wojtekmaj/react-datetimerange-picker/dist/DateTimeRangePicker.css";
+// import "react-calendar/dist/Calendar.css";
+// import "react-clock/dist/Clock.css";
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
 const EditEvent = (props) => {
-  // const [title, setTitle] = useState(props.selectedEvent?.title);
-  // const [startDate, setStartDate] = useState(props.selectedEvent?.start.toISOString().substring(0, 10));
-  // const [endDate, setEndDate] = useState(props.selectedEvent?.end.toISOString().substring(0, 10));
+  const classes = useStyles();
   const [errors, setErrors] = useState(null);
 
   const handleChange = (data, key) => {
     if (key === "title") {
       var copiedData = { ...props.selectedEvent, title: data };
-    } else if (key === "start") {
-      copiedData = { ...props.selectedEvent, start: data };
     } else {
-      copiedData = { ...props.selectedEvent, end: data };
+      copiedData = { ...props.selectedEvent, start: data[0], end: data[1] };
     }
+    props.setSelectedEvent(copiedData);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    axios
-      .put(
-        `http://localhost:8000/api/events/${props.selectedEvent._id}`,
-        selectedEvent
-      )
-      .then((res) => {
-        props.setOpen(false);
-      })
-      .catch((err) => {
-        setErrors(err.response.data.errors);
-      });
+    console.log(props.selectedEvent);
+    // axios
+    //   .put(
+    //     `http://localhost:8000/api/events/${props.selectedEvent._id}`,
+    //     selectedEvent
+    //   )
+    //   .then((res) => {
+    //     props.setOpen(false);
+    //   })
+    //   .catch((err) => {
+    //     setErrors(err.response.data.errors);
+    //   });
   };
 
   return (
@@ -43,7 +57,7 @@ const EditEvent = (props) => {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <div>
+        <div className={classes.paper}>
           <h2 id="create-title">Create new event</h2>
           <form onSubmit={(e) => handleSubmit(e)}>
             <div>
@@ -58,30 +72,10 @@ const EditEvent = (props) => {
                 <p style={{ color: "red" }}>{errors.title?.message}</p>
               )}
             </div>
-            <div>
-              <label htmlFor="event-title">Start: </label>
-              <input
-                type="date"
-                id="event-title"
-                onChange={(e) => handleChange(e.target.value, "start")}
-                value={moment(props.selectedEvent.start).format("YYYY-MM-DD")}
-              />
-              {errors?.start && (
-                <p style={{ color: "red" }}>{errors.start?.message}</p>
-              )}
-            </div>
-            <div>
-              <label htmlFor="event-title">End: </label>
-              <input
-                type="date"
-                id="event-title"
-                onChange={(e) => handleChange(e.target.value, "end")}
-                value={moment(props.selectedEvent.end).format("YYYY-MM-DD")}
-              />
-              {errors?.end && (
-                <p style={{ color: "red" }}>{errors.end?.message}</p>
-              )}
-            </div>
+            <DateTimeRangePicker
+              onChange={(value) => handleChange(value, "time")}
+              value={[props.selectedEvent.start, props.selectedEvent.end]}
+            />
             <button>Edit Event</button>
           </form>
         </div>
