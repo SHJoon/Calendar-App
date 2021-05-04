@@ -20,6 +20,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const modalStyle = {
+  position: "fixed",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)"
+}
+
 const EditEvent = (props) => {
   const classes = useStyles();
   const [errors, setErrors] = useState(null);
@@ -57,7 +64,7 @@ const EditEvent = (props) => {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <div className={classes.paper}>
+        <div style={modalStyle} className={classes.paper}>
           <h2 id="create-title">Create new event</h2>
           <form onSubmit={(e) => handleSubmit(e)}>
             <div>

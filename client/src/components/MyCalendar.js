@@ -14,7 +14,7 @@ const MyCalendar = () => {
   const [allEvents, setAllEvents] = useState([]);
   const [createOpen, setCreateOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState({title:"", start:new Date(), end:new Date()});
+  const [selectedEvent, setSelectedEvent] = useState({title:"", start:new Date(), end:new Date(), _id:""});
 
   // useEffect(() => {
   //   axios
@@ -52,7 +52,7 @@ const MyCalendar = () => {
         ]}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: "80vh", width: "80vw" }}
+        style={{ height: "80vh", width: "100vw" }}
         onSelectEvent={(event, e) => handleClickEvent(event, e)}
       />
       <CreateEvent open={createOpen} setOpen={setCreateOpen} />
