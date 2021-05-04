@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from "@material-ui/core/Modal";
-import moment from "moment";
 import DateTimeRangePicker from "@wojtekmaj/react-datetimerange-picker";
 import axios from "axios";
 
 import "@wojtekmaj/react-datetimerange-picker/dist/DateTimeRangePicker.css";
-// import "react-calendar/dist/Calendar.css";
-// import "react-clock/dist/Clock.css";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: 'absolute',
-    width: 400,
+    width: 380,
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
@@ -42,18 +39,18 @@ const EditEvent = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(props.selectedEvent);
-    // axios
-    //   .put(
-    //     `http://localhost:8000/api/events/${props.selectedEvent._id}`,
-    //     selectedEvent
-    //   )
-    //   .then((res) => {
-    //     props.setOpen(false);
-    //   })
-    //   .catch((err) => {
-    //     setErrors(err.response.data.errors);
-    //   });
+    
+    axios
+      .put(
+        `http://localhost:8000/api/events/${props.selectedEvent._id}`,
+        selectedEvent
+      )
+      .then((res) => {
+        props.setOpen(false);
+      })
+      .catch((err) => {
+        setErrors(err.response.data.errors);
+      });
   };
 
   return (
@@ -65,7 +62,7 @@ const EditEvent = (props) => {
         aria-describedby="simple-modal-description"
       >
         <div style={modalStyle} className={classes.paper}>
-          <h2 id="create-title">Create new event</h2>
+          <h2 id="create-title">Edit event</h2>
           <form onSubmit={(e) => handleSubmit(e)}>
             <div>
               <label htmlFor="event-title">Title: </label>
