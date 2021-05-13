@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import moment from "moment";
 import DateTimeRangePicker from "@wojtekmaj/react-datetimerange-picker";
 import axios from "axios";
 
@@ -9,8 +8,8 @@ import "@wojtekmaj/react-datetimerange-picker/dist/DateTimeRangePicker.css";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    position: "absolute",
-    width: 400,
+    position: 'absolute',
+    width: 380,
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],

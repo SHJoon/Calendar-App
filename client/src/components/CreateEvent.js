@@ -1,15 +1,48 @@
 import React, { useState } from "react";
+import { makeStyles } from '@material-ui/core/styles';
 import Modal from "@material-ui/core/Modal";
+import DateTimeRangePicker from "@wojtekmaj/react-datetimerange-picker";
 import axios from "axios";
 
+import "@wojtekmaj/react-datetimerange-picker/dist/DateTimeRangePicker.css";
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: 'absolute',
+    width: 380,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
+const modalStyle = {
+  position: "fixed",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)"
+}
+
 const CreateEvent = (props) => {
+  const classes = useStyles();
   const [title, setTitle] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
   const [errors, setErrors] = useState(null);
 
+  const handleChange = (data, key) => {
+    if (key === "title") {
+      setTitle(data);
+    } else {
+      setStartDate(data[0]);
+      setEndDate(data[1]);
+    }
+  };
+
   const handleSubmit = (e) => {
+    e.preventDefault();
     const formData = {
       title,
       start: startDate,
@@ -34,7 +67,7 @@ const CreateEvent = (props) => {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <div>
+        <div style={modalStyle} className={classes.paper}>
           <h2 id="create-title">Create new event</h2>
           <form onSubmit={(e) => handleSubmit(e)}>
             <div>
@@ -42,38 +75,18 @@ const CreateEvent = (props) => {
               <input
                 type="text"
                 id="event-title"
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => handleChange(e.target.value, "title")}
                 value={title}
               />
               {errors?.title && (
                 <p style={{ color: "red" }}>{errors.title?.message}</p>
               )}
             </div>
-            <div>
-              <label htmlFor="event-title">Start: </label>
-              <input
-                type="date"
-                id="event-title"
-                onChange={(e) => setStartDate(e.target.value)}
-                value={startDate}
-              />
-              {errors?.start && (
-                <p style={{ color: "red" }}>{errors.start?.message}</p>
-              )}
-            </div>
-            <div>
-              <label htmlFor="event-end">End: </label>
-              <input
-                type="date"
-                id="event-end"
-                onChange={(e) => setEndDate(e.target.value)}
-                value={endDate}
-              />
-              {errors?.end && (
-                <p style={{ color: "red" }}>{errors.end?.message}</p>
-              )}
-            </div>
-            <button>Create Event</button>
+            <DateTimeRangePicker
+              onChange={(value) => handleChange(value, "time")}
+              value={[startDate, endDate]}
+            />
+            <button>Create new Event</button>
           </form>
         </div>
       </Modal>
