@@ -52,7 +52,7 @@ const MyCalendar = () => {
         ]}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: "80vh", width: "100vw" }}
+        style={{ height: "95vh", width: "100vw" }}
         onSelectEvent={(event, e) => handleClickEvent(event, e)}
       />
       <CreateEvent open={createOpen} setOpen={setCreateOpen} />
