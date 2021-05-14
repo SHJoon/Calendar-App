@@ -8,7 +8,7 @@ import "@wojtekmaj/react-datetimerange-picker/dist/DateTimeRangePicker.css";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    position: 'absolute',
+    position: "absolute",
     width: 380,
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
@@ -42,6 +42,7 @@ const EditEvent = (props) => {
     e.preventDefault();
     if (props.selectedEvent.start < props.selectedEvent.end) {
       setDateError(true);
+      return;
     }
     axios
       .put(

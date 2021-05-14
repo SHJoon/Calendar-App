@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     width: 380,
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
@@ -21,14 +21,15 @@ const modalStyle = {
   position: "fixed",
   top: "50%",
   left: "50%",
-  transform: "translate(-50%, -50%)"
-}
+  transform: "translate(-50%, -50%)",
+};
 
 const CreateEvent = (props) => {
   const classes = useStyles();
   const [title, setTitle] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [dateError, setDateError] = useState(false);
 
   const [errors, setErrors] = useState(null);
 
@@ -43,6 +44,11 @@ const CreateEvent = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (props.selectedEvent.start < props.selectedEvent.end) {
+      setDateError(true);
+      return;
+    }
+    
     const formData = {
       title,
       start: startDate,
@@ -52,6 +58,7 @@ const CreateEvent = (props) => {
     axios
       .post(`http://localhost:8000/api/events/create`, formData)
       .then((res) => {
+        setDateError(false);
         props.setOpen(false);
       })
       .catch((err) => {
@@ -86,6 +93,11 @@ const CreateEvent = (props) => {
               onChange={(value) => handleChange(value, "time")}
               value={[startDate, endDate]}
             />
+            {dateError && (
+              <p style={{ color: "red" }}>
+                The end time must be after the start time.
+              </p>
+            )}
             <button>Create new Event</button>
           </form>
         </div>
