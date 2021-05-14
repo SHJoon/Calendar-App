@@ -40,7 +40,7 @@ const EditEvent = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (props.selectedEvent.start < props.selectedEvent.end) {
+    if (props.selectedEvent.start > props.selectedEvent.end) {
       setDateError(true);
       return;
     }

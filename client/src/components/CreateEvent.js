@@ -44,7 +44,7 @@ const CreateEvent = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (startDate < endDate) {
+    if (startDate > endDate) {
       setDateError(true);
       return;
     }
