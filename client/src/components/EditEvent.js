@@ -9,7 +9,7 @@ import "@wojtekmaj/react-datetimerange-picker/dist/DateTimeRangePicker.css";
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
-    width: 380,
+    width: 400,
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
@@ -47,11 +47,19 @@ const EditEvent = (props) => {
     axios
       .put(
         `http://localhost:8000/api/events/${props.selectedEvent._id}`,
-        selectedEvent
+        props.selectedEvent
       )
       .then((res) => {
         setDateError(null);
         props.setOpen(false);
+        axios
+          .get(`http://localhost:8000/api/events`)
+          .then((res) => {
+            props.setAllEvents(res.data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       })
       .catch((err) => {
         setErrors(err.response.data.errors);

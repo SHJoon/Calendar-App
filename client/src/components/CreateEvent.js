@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import DateTimeRangePicker from "@wojtekmaj/react-datetimerange-picker";
 import axios from "axios";
@@ -8,8 +8,8 @@ import "@wojtekmaj/react-datetimerange-picker/dist/DateTimeRangePicker.css";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    position: 'absolute',
-    width: 380,
+    position: "absolute",
+    width: 400,
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
@@ -44,11 +44,11 @@ const CreateEvent = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (props.selectedEvent.start < props.selectedEvent.end) {
+    if (startDate < endDate) {
       setDateError(true);
       return;
     }
-    
+
     const formData = {
       title,
       start: startDate,
@@ -60,6 +60,14 @@ const CreateEvent = (props) => {
       .then((res) => {
         setDateError(false);
         props.setOpen(false);
+        axios
+          .get(`http://localhost:8000/api/events`)
+          .then((res) => {
+            props.setAllEvents(res.data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       })
       .catch((err) => {
         setErrors(err.response.data.errors);

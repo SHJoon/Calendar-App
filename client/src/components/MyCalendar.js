@@ -14,18 +14,23 @@ const MyCalendar = () => {
   const [allEvents, setAllEvents] = useState([]);
   const [createOpen, setCreateOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState({title:"", start:new Date(), end:new Date(), _id:""});
+  const [selectedEvent, setSelectedEvent] = useState({
+    title: "",
+    start: new Date(),
+    end: new Date(),
+    _id: "",
+  });
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`http://localhost:8000/api/events`)
-  //     .then((res) => {
-  //       setAllEvents(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/api/events`)
+      .then((res) => {
+        setAllEvents(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   const handleClickEvent = (event, e) => {
     console.log(event);
@@ -38,29 +43,35 @@ const MyCalendar = () => {
       <button onClick={(e) => setCreateOpen(true)}>Create new event</button>
       <Calendar
         localizer={localizer}
-        // events={allEvents}
-        events={[
-          {
-            start: moment().toDate(),
-            end: moment().add(1, "days").toDate(),
-            title: "Some title",
-          }, {
-            start: moment().toDate(),
-            end: moment().add(3, "days").toDate(),
-            title: "Some title23",
-          },
-        ]}
+        events={allEvents}
+        // events={[
+        //   {
+        //     start: moment().toDate(),
+        //     end: moment().add(1, "days").toDate(),
+        //     title: "Some title",
+        //   },
+        //   {
+        //     start: moment().toDate(),
+        //     end: moment().add(3, "days").toDate(),
+        //     title: "Some title23",
+        //   },
+        // ]}
         startAccessor="start"
         endAccessor="end"
         style={{ height: "95vh", width: "100vw" }}
         onSelectEvent={(event, e) => handleClickEvent(event, e)}
       />
-      <CreateEvent open={createOpen} setOpen={setCreateOpen} />
+      <CreateEvent
+        open={createOpen}
+        setOpen={setCreateOpen}
+        setAllEvents={setAllEvents}
+      />
       <EditEvent
         open={editOpen}
         setOpen={setEditOpen}
         selectedEvent={selectedEvent}
         setSelectedEvent={setSelectedEvent}
+        setAllEvents={setAllEvents}
       />
     </div>
   );
