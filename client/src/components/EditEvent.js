@@ -9,7 +9,7 @@ import "@wojtekmaj/react-datetimerange-picker/dist/DateTimeRangePicker.css";
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
-    width: 400,
+    width: 420,
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
@@ -62,7 +62,9 @@ const EditEvent = (props) => {
           });
       })
       .catch((err) => {
-        setErrors(err.response.data.errors);
+        console.err("here");
+        console.error(err);
+        // setErrors(err.response.data.errors);
       });
   };
 
